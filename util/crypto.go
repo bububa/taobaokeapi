@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/bububa/dataoke-go/util/token"
+	"github.com/bububa/taobaokeapi/util/token"
 )
 
 func Md5(str string) string {

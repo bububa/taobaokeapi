@@ -5,7 +5,7 @@ import (
 )
 
 type Response struct {
-	RequestID string          `json::"request_id,omitempty"`
+	RequestID string          `json:"request_id,omitempty"`
 	Code      string          `json:"code,omitempty"`
 	Msg       string          `json:"msg,omitempty"`
 	SubCode   string          `json:"sub_code,omitempty"`
@@ -13,15 +13,12 @@ type Response struct {
 	Result    *ResponseResult `json:"result,omitempty"`
 }
 
-func (this Response) IsError() bool {
-	if this.Code != "" {
-		return true
-	}
-	return false
+func (r Response) IsError() bool {
+	return r.Code != ""
 }
 
-func (this Response) Error() string {
-	return this.SubMsg
+func (r Response) Error() string {
+	return r.SubMsg
 }
 
 type ResponseResult struct {
