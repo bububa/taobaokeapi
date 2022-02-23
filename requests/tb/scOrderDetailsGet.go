@@ -65,7 +65,7 @@ func (r ScOrderDetailsGetRequest) Params() url.Values {
 	return params
 }
 
-type ScOrderDetailsResponse struct {
+type ScOrderDetailsGetResponse struct {
 	// PublisherOrderDto
 	Results []PublisherOrderDto `json:"results,omitempty" xml:"results>publisher_order_dto,omitempty"`
 	// 位点字段，由调用方原样传递

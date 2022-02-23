@@ -7,9 +7,14 @@ import (
 )
 
 type GetPrivilegeLinkRequest struct {
-	ItemID   uint64 `json:"item_id"`
-	SiteID   uint64 `json:"site_id"`
-	AdzoneID uint64 `json:"adzone_id"`
+	ItemID     uint64 `json:"item_id,omitempty"`
+	SiteID     uint64 `json:"site_id"`
+	AdzoneID   uint64 `json:"adzone_id"`
+	Platform   int    `json:"platform,omitempty"`
+	Me         string `json:"me,omitempty"`
+	RelationID string `json:"relation_id,omitempty"`
+	SpecialID  string `json:"special_id,omitempty"`
+	ExternalID string `json:"external_id,omitempty"`
 }
 
 type GetPrivilegeLinkResponse struct {
