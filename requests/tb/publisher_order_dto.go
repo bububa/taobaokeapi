@@ -1,5 +1,7 @@
 package tb
 
+import "encoding/json"
+
 type PublisherOrderDto struct {
 	// 订单在淘宝拍下付款的时间
 	TbPaidTime string `json:"tb_paid_time,omitempty" xml:"tb_paid_time,omitempty"`
@@ -102,27 +104,27 @@ type PublisherOrderDto struct {
 	// 开发者调用api的appkey
 	AppKey string `json:"app_key,omitempty" xml:"app_key,omitempty"`
 	// 二方：佣金收益的第一归属者； 三方：从其他淘宝客佣金中进行分成的推广者
-	TkOrderRole int64 `json:"tk_order_role,omitempty" xml:"tk_order_role,omitempty"`
+	TkOrderRole json.Number `json:"tk_order_role,omitempty" xml:"tk_order_role,omitempty"`
 	// 推广位管理下的推广位名称对应的ID，同时也是pid=mm_1_2_3中的“3”这段数字
-	AdzoneId string `json:"adzone_id,omitempty" xml:"adzone_id,omitempty"`
+	AdzoneId json.Number `json:"adzone_id,omitempty" xml:"adzone_id,omitempty"`
 	// 维权标签，0 含义为非维权 1 含义为维权订单
-	RefundTag string `json:"refund_tag,omitempty" xml:"refund_tag,omitempty"`
+	RefundTag json.Number `json:"refund_tag,omitempty" xml:"refund_tag,omitempty"`
 	// 推广者的会员id
-	PubId string `json:"pub_id,omitempty" xml:"pub_id,omitempty"`
+	PubId json.Number `json:"pub_id,omitempty" xml:"pub_id,omitempty"`
 	// 商品数量
-	ItemNum string `json:"item_num,omitempty" xml:"item_num,omitempty"`
+	ItemNum json.Number `json:"item_num,omitempty" xml:"item_num,omitempty"`
 	// 已拍下：指订单已拍下，但还未付款 已付款：指订单已付款，但还未确认收货 已收货：指订单已确认收货，但商家佣金未支付 已结算：指订单已确认收货，且商家佣金已支付成功 已失效：指订单关闭/订单佣金小于0.01元，订单关闭主要有：1）买家超时未付款； 2）买家付款前，买家/卖家取消了订单；3）订单付款后发起售中退款成功；3：订单结算，11：拍下未付款，12：订单付款， 13：订单失效，14：订单成功
-	TkStatus string `json:"tk_status,omitempty" xml:"tk_status,omitempty"`
+	TkStatus json.Number `json:"tk_status,omitempty" xml:"tk_status,omitempty"`
 	// 商品id
-	ItemId string `json:"item_id,omitempty" xml:"item_id,omitempty"`
+	ItemId json.Number `json:"item_id,omitempty" xml:"item_id,omitempty"`
 	// 媒体管理下的ID，同时也是pid=mm_1_2_3中的“2”这段数字
-	SiteId string `json:"site_id,omitempty" xml:"site_id,omitempty"`
+	SiteId json.Number `json:"site_id,omitempty" xml:"site_id,omitempty"`
 	// 会员运营id
-	SpecialId string `json:"special_id,omitempty" xml:"special_id,omitempty"`
+	SpecialId json.Number `json:"special_id,omitempty" xml:"special_id,omitempty"`
 	// 渠道关系id
-	RelationId string `json:"relation_id,omitempty" xml:"relation_id,omitempty"`
+	RelationId json.Number `json:"relation_id,omitempty" xml:"relation_id,omitempty"`
 	// 契约方memberId
-	TkContractMemberId string `json:"tk_contract_member_id,omitempty" xml:"tk_contract_member_id,omitempty"`
+	TkContractMemberId json.Number `json:"tk_contract_member_id,omitempty" xml:"tk_contract_member_id,omitempty"`
 	// 契约id
-	TkContractId string `json:"tk_contract_id,omitempty" xml:"tk_contract_id,omitempty"`
+	TkContractId json.Number `json:"tk_contract_id,omitempty" xml:"tk_contract_id,omitempty"`
 }

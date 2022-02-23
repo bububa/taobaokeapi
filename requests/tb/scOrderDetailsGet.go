@@ -1,6 +1,7 @@
 package tb
 
 import (
+	"encoding/json"
 	"net/url"
 	"strconv"
 )
@@ -70,9 +71,9 @@ type ScOrderDetailsResponse struct {
 	// 位点字段，由调用方原样传递
 	PositionIndex string `json:"position_index,omitempty" xml:"position_index,omitempty"`
 	// 页码
-	PageNo int `json:"page_no,omitempty" xml:"page_no,omitempty"`
+	PageNo json.Number `json:"page_no,omitempty" xml:"page_no,omitempty"`
 	// 页大小
-	PageSize int `json:"page_size,omitempty" xml:"page_size,omitempty"`
+	PageSize json.Number `json:"page_size,omitempty" xml:"page_size,omitempty"`
 	// 是否还有上一页
 	HasPre bool `json:"has_pre,omitempty" xml:"has_pre,omitempty"`
 	// 是否还有下一页
