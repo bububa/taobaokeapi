@@ -75,7 +75,7 @@ type ScOrderDetailsGetResponse struct {
 	// 页大小
 	PageSize json.Number `json:"page_size,omitempty" xml:"page_size,omitempty"`
 	// 是否还有上一页
-	HasPre bool `json:"has_pre,omitempty" xml:"has_pre,omitempty"`
+	HasPre string `json:"has_pre,omitempty" xml:"has_pre,omitempty"`
 	// 是否还有下一页
-	HasNext bool `json:"has_next,omitempty" xml:"has_next,omitempty"`
+	HasNext string `json:"has_next,omitempty" xml:"has_next,omitempty"`
 }
