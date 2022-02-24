@@ -11,6 +11,7 @@ type Response struct {
 	SubCode   string          `json:"sub_code,omitempty"`
 	SubMsg    string          `json:"sub_msg,omitempty"`
 	Result    *ResponseResult `json:"result,omitempty"`
+	Data      json.RawMessage `json:"data,omitempty"`
 }
 
 func (r Response) IsError() bool {
