@@ -91,8 +91,6 @@ type PublisherOrderDto struct {
 	LxRid string `json:"lx_rid,omitempty" xml:"lx_rid,omitempty"`
 	// 订单是否为激励池订单 1，表征是 0，表征否
 	IsLx json.Number `json:"is_lx,omitempty" xml:"is_lx,omitempty"`
-	// 营销类型：该字段中视订单情况有单个或多个值。 例如：淘礼金（自助充值），特价版客户端染色，特价版客户端锁粉，特价版客户端推广。
-	MarketingType string `json:"marketing_type,omitempty" xml:"marketing_type,omitempty"`
 	// 订单更新时间
 	ModifiedTime string `json:"modified_time,omitempty" xml:"modified_time,omitempty"`
 	// 专用（不对外开放）
