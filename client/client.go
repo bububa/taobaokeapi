@@ -1,8 +1,13 @@
 package client
 
 import (
+	"bytes"
 	"encoding/json"
+	"io"
+	"io/ioutil"
+	"log"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -11,6 +16,7 @@ const (
 
 type Client struct {
 	usertoken string
+	debug     bool
 }
 
 func NewClient(usertoken string) *Client {
@@ -19,11 +25,22 @@ func NewClient(usertoken string) *Client {
 	}
 }
 
+func (c *Client) SetDebug(debug bool) {
+	c.debug = debug
+}
+
 func (c *Client) Do(req Request, ret interface{}) error {
 	params := req.Params()
 	params.Set("usertoken", c.usertoken)
 	params.Set("method", req.Method())
-	httpResp, err := http.PostForm(GATEWAY, params)
+	var builder strings.Builder
+	builder.WriteString(GATEWAY)
+	builder.WriteString("?")
+	builder.WriteString(params.Encode())
+	if c.debug {
+		log.Printf("[taobaokeapi REQ] %s\n", builder.String())
+	}
+	httpResp, err := http.Get(builder.String())
 	if err != nil {
 		return err
 	}
@@ -32,7 +49,7 @@ func (c *Client) Do(req Request, ret interface{}) error {
 	}
 	defer httpResp.Body.Close()
 	var res Response
-	err = json.NewDecoder(httpResp.Body).Decode(&res)
+	err = decodeJSONHttpResponse(httpResp.Body, &res)
 	if err != nil {
 		return err
 	}
@@ -46,4 +63,20 @@ func (c *Client) Do(req Request, ret interface{}) error {
 		return nil
 	}
 	return json.Unmarshal(res.Result.Data, &ret)
+}
+
+func decodeJSONHttpResponse(r io.Reader, v interface{}) error {
+	body, err := ioutil.ReadAll(r)
+	if err != nil {
+		return err
+	}
+
+	body2 := body
+	buf := bytes.NewBuffer(make([]byte, 0, len(body2)+1024))
+	if err := json.Indent(buf, body2, "", "    "); err == nil {
+		body2 = buf.Bytes()
+	}
+	log.Printf("[taobaokeapi] [API] http response body:\n%s\n", body2)
+
+	return json.Unmarshal(body, v)
 }
