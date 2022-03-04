@@ -49,7 +49,7 @@ func (c *Client) Do(req Request, ret interface{}) error {
 	}
 	defer httpResp.Body.Close()
 	var res Response
-	err = decodeJSONHttpResponse(httpResp.Body, &res)
+	err = decodeJSONHttpResponse(httpResp.Body, &res, c.debug)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,10 @@ func (c *Client) Do(req Request, ret interface{}) error {
 	return json.Unmarshal(res.Result.Data, &ret)
 }
 
-func decodeJSONHttpResponse(r io.Reader, v interface{}) error {
+func decodeJSONHttpResponse(r io.Reader, v interface{}, debug bool) error {
+	if debug {
+		return json.NewDecoder(r).Decode(v)
+	}
 	body, err := ioutil.ReadAll(r)
 	if err != nil {
 		return err
