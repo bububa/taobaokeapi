@@ -68,7 +68,7 @@ func (c *Client) Do(req Request, ret interface{}) error {
 }
 
 func decodeJSONHttpResponse(r io.Reader, v interface{}, debug bool) error {
-	if debug {
+	if !debug {
 		return json.NewDecoder(r).Decode(v)
 	}
 	body, err := ioutil.ReadAll(r)
