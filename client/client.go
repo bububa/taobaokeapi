@@ -61,6 +61,8 @@ func (c *Client) Do(req Request, ret interface{}) error {
 	}
 	if res.Result == nil && res.Data != nil {
 		return json.Unmarshal(res.Data, &ret)
+	} else if res.Result == nil && res.Results != nil {
+		return json.Unmarshal(res.Results, &ret)
 	} else if res.Result == nil && res.Data == nil {
 		return nil
 	}
