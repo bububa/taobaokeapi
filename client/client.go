@@ -29,7 +29,7 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
-func (c *Client) Do(req Request, ret interface{}) error {
+func (c *Client) Do(req Request, ret interface{}) (int64, error) {
 	params := req.Params()
 	params.Set("usertoken", c.usertoken)
 	params.Set("method", req.Method())
@@ -42,31 +42,32 @@ func (c *Client) Do(req Request, ret interface{}) error {
 	}
 	httpResp, err := http.Get(builder.String())
 	if err != nil {
-		return err
+		return 0, err
 	}
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer httpResp.Body.Close()
 	var res Response
 	err = decodeJSONHttpResponse(httpResp.Body, &res, c.debug)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	if res.IsError() {
-		return res
+		return 0, res
 	}
 	if ret == nil {
-		return nil
+		return 0, nil
 	}
+	total, _ := res.TotalResults.Int64()
 	if res.Result == nil && res.Data != nil {
-		return json.Unmarshal(res.Data, &ret)
+		return total, json.Unmarshal(res.Data, &ret)
 	} else if res.Result == nil && res.Results != nil {
-		return json.Unmarshal(res.Results, &ret)
+		return total, json.Unmarshal(res.Results, &ret)
 	} else if res.Result == nil && res.Data == nil {
-		return nil
+		return total, nil
 	}
-	return json.Unmarshal(res.Result.Data, &ret)
+	return total, json.Unmarshal(res.Result.Data, &ret)
 }
 
 func decodeJSONHttpResponse(r io.Reader, v interface{}, debug bool) error {
