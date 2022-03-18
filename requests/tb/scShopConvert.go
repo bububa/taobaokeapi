@@ -55,10 +55,3 @@ func (r ScShopConvertRequest) Params() url.Values {
 type ScShopConvertResponse struct {
 	Results []NTbkShop `json:"results,omitempty"`
 }
-
-type NTbkShop struct {
-	// UserID 卖家ID
-	UserID uint64 `json:"user_id,omitempty"`
-	// ClickURL 淘客地址
-	ClickURL string `json:"click_url,omitempty"`
-}
