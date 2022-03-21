@@ -16,12 +16,14 @@ const (
 
 type Client struct {
 	usertoken string
+	gw        string
 	debug     bool
 }
 
 func NewClient(usertoken string) *Client {
 	return &Client{
 		usertoken: usertoken,
+		gw:        GATEWAY,
 	}
 }
 
@@ -29,12 +31,16 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
+func (c *Client) SetGateway(gw string) {
+	c.gw = gw
+}
+
 func (c *Client) Do(req Request, ret interface{}) (int64, error) {
 	params := req.Params()
 	params.Set("usertoken", c.usertoken)
 	params.Set("method", req.Method())
 	var builder strings.Builder
-	builder.WriteString(GATEWAY)
+	builder.WriteString(c.gw)
 	builder.WriteString("?")
 	builder.WriteString(params.Encode())
 	if c.debug {
